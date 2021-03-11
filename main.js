@@ -3,25 +3,27 @@ const ctx = canvas.getContext('2d');
 const $score = document.getElementById('score');
 const $timer = document.getElementById('timer');
 
-const ballRadius =10;
-let x = canvas.width/2;
-let y = canvas.height-30;
-let dx = 2;
-let dy = -2;
-const boardHeight  = 15;
+const ballRadius = 10;
+const boardHeight = 15;
 const boardWidth = 90;
-let boardX = (canvas.width-boardWidth)/2;
-let rightPressed = false;
-let leftPressed = false;
-
 const brickRow = 4;
-const brickColumn = 5; 
+const brickColumn = 5;
 const brickHeight = 20;
 const brickWidth = 100;
 const brickPdding = 10;
 const brickMarginTop = 20;
 const brickMarginleft = 20;
+let x = canvas.width/2;
+let y = canvas.height-30;
+let dx = 2;
+let dy = -2;
+let boardX = (canvas.width-boardWidth)/2;
+let rightPressed = false;
+let leftPressed = false;
 let points = 0;
+let timer = 120;
+
+ 
 
 let bricks =[];
 for(let i=0; i < brickColumn; i++){
@@ -53,6 +55,7 @@ const mouseMove = ($event)=> {
         boardX = relativeX - boardWidth/2;
     }
 }
+
 const impact = ()=>{
     for(let i = 0; i < brickColumn; i++){
         for (let k=0; k < brickRow; k++){
@@ -64,6 +67,8 @@ const impact = ()=>{
                     points++;
                     $score.innerHTML = points;
                     if(points == brickRow * brickColumn){
+                        clearInterval(gameInterval);
+                        clearInterval(timerInterval);
                         Swal.fire({
                             title: 'You Win!',
                             icon: "success",
@@ -72,7 +77,7 @@ const impact = ()=>{
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 document.location.reload();
-                                clearInterval(interval);
+                               
                             }
                         })
                     }
@@ -81,20 +86,23 @@ const impact = ()=>{
         }
     }
 }
+
 const drawBall = ()=>{
     ctx.beginPath();
     ctx.arc(x,y,ballRadius,0,Math.PI*2);
-    ctx.fillStyle = "#E63946";
+    ctx.fillStyle = "#0466c8";
     ctx.fill();
     ctx.closePath();
 }
+
 const drawBoard = () => {
     ctx.beginPath();
     ctx.rect(boardX, canvas.height-boardHeight, boardWidth, boardHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "#495057";
     ctx.fill();
     ctx.closePath();
 }
+
 const drawBricks = () => {
     for (let i = 0; i < brickColumn; i++){
         for (let k = 0; k < brickRow; k++){
@@ -106,13 +114,14 @@ const drawBricks = () => {
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
                 // ctx.shadowColor = 'rgba(100, 100, 255, 1)';
-                ctx.fillStyle = "rgba(100, 100, 255, 1)";
+                ctx.fillStyle = "#fb8500";
                 ctx.fill();
                 ctx.closePath();
             }
         }
     }
 }
+
 const draw = ()=>{
     ctx.clearRect(0, 0, canvas.width, canvas.height);
      drawBricks();
@@ -134,7 +143,9 @@ const draw = ()=>{
         }
         else {
             // alert('game over');
-            clearInterval(interval);
+            clearInterval(gameInterval);
+            clearInterval(timerInterval);
+           
             Swal.fire({
                 title: 'Game Over',
                 icon: 'Alert',
@@ -142,9 +153,9 @@ const draw = ()=>{
                 confirmButtonText: 'Play Again'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.location.reload();
-                    
+                    document.location.reload(); 
                 }
+               
             })
         }
     }
@@ -163,7 +174,32 @@ const draw = ()=>{
     x += dx;
     y += dy;
 }
- const interval = setInterval(draw,10);
+
+const countTime = () => {
+    timerInterval = setInterval(() => {
+        --timer;
+        $timer.innerText = timer;
+
+        if (timer === 0  ) {
+            clearInterval(timerInterval);
+            clearInterval(gameInterval);
+            Swal.fire({
+                title: 'End Of Time',
+                icon: 'Alert',
+                showConfirmButton: true,
+                confirmButtonText: 'Play Again'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.location.reload();
+
+                }
+            })
+        }
+    }, 1000);
+}
+
+const gameInterval = setInterval(draw,10);
+countTime();
 document.addEventListener('keydown', down, false);
 document.addEventListener('keyup', up, false);
 document.addEventListener('mousemove', mouseMove, false);
