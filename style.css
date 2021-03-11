@@ -1,10 +1,31 @@
 body{
   margin: 0, auto;
   text-align: center;
+  background: #000;
 }
 canvas{
-  background: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 50%, #ffffff 100%);
+  background:#caf0f8;
   border-radius: 8px;
+}
+.game-container{
+  font-family: 'Reggae One', cursive;
+  display: inline-block;
+  margin: 0 auto;
+  background: #00b4d8;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 10px 10px 0 0 #000000;
+}
+
+.game-container header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1{
+  margin: 0 0 5px 0;
+  line-height: 1;
 }
 ul{
   margin: 0;
@@ -15,9 +36,9 @@ ul li{
   list-style: none;
 }
 #dashboard{
-  font-family: 'Reggae One', cursive;
+  
   font-size: 24px;
-  background: rgba(0, 0, 0, 0.2);
+  background: #ccc;
   margin: 10px 0 0;
   padding: 5px 10px;
   border-radius: 100vw;
