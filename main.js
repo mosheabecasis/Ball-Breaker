@@ -84,14 +84,14 @@ const impact = ()=>{
 const drawBall = ()=>{
     ctx.beginPath();
     ctx.arc(x,y,ballRadius,0,Math.PI*2);
-    ctx.fillstyle = "#E63946";
+    ctx.fillStyle = "#E63946";
     ctx.fill();
     ctx.closePath();
 }
 const drawBoard = () => {
     ctx.beginPath();
     ctx.rect(boardX, canvas.height-boardHeight, boardWidth, boardHeight);
-    ctx.fillstyle = "#0095DD";
+    ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
@@ -106,7 +106,7 @@ const drawBricks = () => {
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
                 // ctx.shadowColor = 'rgba(100, 100, 255, 1)';
-                ctx.fillstyle = "rgba(100, 100, 255, 1)";
+                ctx.fillStyle = "rgba(100, 100, 255, 1)";
                 ctx.fill();
                 ctx.closePath();
             }
